@@ -6,7 +6,7 @@ app.use(express.json())
 app.post('/eventos', async (req, res) => {
     //1. pegar o evento
     const evento = req.body
-    //2. enviar o evento para o mss de lembretes
+    //2. enviar o evento para o ms de lembretes
     try{
        await axios.post('http://localhost:4000/eventos', evento) 
     }
@@ -20,7 +20,14 @@ app.post('/eventos', async (req, res) => {
      catch (e) {
          console.log(e)
      }
-    //4. "respoder"
+     //4. enviar o evento para o ms de consulta
+     try{
+        await axios.post('http://localhost:6000/eventos', evento) 
+     }
+     catch (e) {
+         console.log(e)
+     }
+    //5. "respoder"
     res.end()
 })
 
