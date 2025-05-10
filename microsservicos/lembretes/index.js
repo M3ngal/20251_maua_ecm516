@@ -26,7 +26,6 @@ app.get('/lembretes', (req, res) => {
 //POST /lembretes () => {}
 app.post('/lembretes', (req, res) => {
     //1. pegar o texto que veio da requisição
-    // const texto = req.bode.texto
     const { texto } = req.body
     //2. construir um objeto com id e texto
     const lembrete = {
