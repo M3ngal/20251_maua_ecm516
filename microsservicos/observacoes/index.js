@@ -3,6 +3,9 @@ const express = require('express')
 const { v4: uuidv4 } = require('uuid')
 const app = express()
 app.use(express.json())
+
+const urlBase = 'host.docker.internal'
+
 /*
 {
     1: [
@@ -24,7 +27,7 @@ const funcoes = {
         const observacoes = baseObservacoes[observacao.idLembrete]
         const obsParaAtualizar = observacoes.find(o => o.id === observacao.id)
         obsParaAtualizar.status = observacao.status
-        await axios.post('http://localhost:10000/eventos', {
+        await axios.post(`http://${urlBase}:10000/eventos`, {
             tipo: 'ObservacaoAtualizada',
             dados: observacao
         })
@@ -52,7 +55,7 @@ app.post('/lembretes/:idLembrete/observacoes', async (req, res) => {
     const observacoes = baseObservacoes[idLembrete] || []
     observacoes.push(observacao)
     baseObservacoes[idLembrete] = observacoes
-    await axios.post('http://localhost:10000/eventos', {
+    await axios.post(`http://${urlBase}:10000/eventos`, {
         tipo: "ObservacaoCriada",
         dados: observacao
     })

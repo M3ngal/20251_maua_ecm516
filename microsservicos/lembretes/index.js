@@ -2,6 +2,9 @@ const express = require('express')
 const axios = require('axios')
 const app = express()
 app.use(express.json())
+
+const urlBase = 'host.docker.internal'
+
 /* 
 {
     1: {
@@ -36,7 +39,7 @@ app.post('/lembretes', (req, res) => {
     baseLembretes[id] = lembrete
     //4. incrementar o id para proxima vez
     id++
-    axios.post('http://localhost:10000/eventos', {
+    axios.post(`http://${urlBase}:10000/eventos`, {
         tipo: 'LembreteCriado',
         dados: lembrete
     })

@@ -3,6 +3,8 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 
+const urlBase = 'host.docker.internal'
+
 /*
 {
     1: {
@@ -34,7 +36,7 @@ const funcoes = {
         observacoes.push(observacao)
         baseConsolidada[observacao.idLembrete]['observacoes'] = observacoes
     },
-    ObservacaoObservacaoAtualizada: async (observacao) => {
+    ObservacaoAtualizada: async (observacao) => {
         const observacoes = baseConsolidada[observacao.idLembrete]['observacoes']
         const indice = observacoes.findIndex(o => o.id === observacao.id)
         observacoes[indice] = observacao
@@ -62,7 +64,7 @@ app.post('/eventos', async (req, res) => {
 const port = 6000
 app.listen(port, async () => {
     console.log(`Porta: ${port}`)
-    const { data } = await axios.get('http://localhost:10000/eventos')
+    const { data } = await axios.get(`http://${urlBase}:10000/eventos`)
     data.forEach(async (evento) => {
         try {
             await funcoes[evento.tipo](evento.dados)

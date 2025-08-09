@@ -3,11 +3,13 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 
+const urlBase = 'host.docker.internal'
+
 const funcoes = {
     ObservacaoCriada: async (observacao) => {
         const { texto } = observacao
         observacao.status = observacao.texto.includes('importante') ? 'importante' : 'comum'
-        await axios.post('http://localhost:10000/eventos', {
+        await axios.post(`http://${urlBase}:10000/eventos`, {
             tipo: 'ObservacaoClassificada',
             dados: observacao
         })
