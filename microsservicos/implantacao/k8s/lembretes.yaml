@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
     - name: ecm516-lembretes
-      image: Mengal/lembretes:0.0.1
+      image: m3ngal/lembretes:0.0.1
       resources:
         limits:
           memory: 256Mi
