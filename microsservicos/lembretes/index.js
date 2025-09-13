@@ -3,7 +3,7 @@ const axios = require('axios')
 const app = express()
 app.use(express.json())
 
-const urlBase = 'host.docker.internal'
+const urlBase = 'ecm516-barramento-de-eventos-service' //'host.docker.internal'
 
 /* 
 {

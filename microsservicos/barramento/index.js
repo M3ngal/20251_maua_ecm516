@@ -13,7 +13,7 @@ app.post('/eventos', async (req, res) => {
     eventos.push(evento)
     //2. enviar o evento para o ms de lembretes
     try {
-        await axios.post(`http://${urlBase}:4000/eventos`, evento)
+        await axios.post(`http://ecm516-lembretes-clusterip-service:4000/eventos`, evento)
     }
     catch (e) {
         console.log(e)
