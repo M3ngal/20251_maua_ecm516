@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 
-const urlBase = 'host.docker.internal'
+const urlBase = 'ecm516-barramento-de-eventos-service'
 
 const funcoes = {
     ObservacaoCriada: async (observacao) => {

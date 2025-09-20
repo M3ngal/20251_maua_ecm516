@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: ecm516-consulta-deployment
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: consulta
+  template:
+    metadata:
+      labels: 
+        app: consulta
+    spec:
+      containers:
+        - name: consulta
+          image: m3ngal/ecm516-consulta
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 1
+            requests:
+              memory: 256Mi
+              cpu: 1

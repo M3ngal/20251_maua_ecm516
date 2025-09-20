@@ -20,21 +20,21 @@ app.post('/eventos', async (req, res) => {
     }
     //3. enviar o evento para o ms de observações
     try {
-        await axios.post(`http://${urlBase}:5100/eventos`, evento)
+        await axios.post(`http://ecm516-observacoes-clusterip-service:5100/eventos`, evento)
     }
     catch (e) {
         console.log(e)
     }
     //4. enviar o evento para o ms de consulta
     try {
-        await axios.post(`http://${urlBase}:6000/eventos`, evento)
+        await axios.post(`http://ecm516-consulta-clusterip-service:6000/eventos`, evento)
     }
     catch (e) {
         console.log(e)
     }
     //5. enviar o evento para o ms de classificacao
     try {
-        await axios.post(`http://${urlBase}:7000/eventos`, evento)
+        await axios.post(`http://ecm516-classificacao-clusterip-service:7000/eventos`, evento)
     }
     catch (e) {
         console.log(e)
