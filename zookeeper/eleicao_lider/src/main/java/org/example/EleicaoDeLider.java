@@ -1,18 +1,54 @@
 package org.example;
 
 import org.apache.zookeeper.*;
+import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
 public class EleicaoDeLider {
+    private static final String ZNODE_TESTE_WATCHER = "/teste_watch";
     private static final String HOST = "10.2.131.164";
     private static final String PORTA = "2181";
     private static final int TIMEOUT = 5000;
     private ZooKeeper zooKeeper;
     public static final String NAMESPACE_ELEICAO = "/eleicao";
     private String nomeDoZNodeDesseProcesso;
+
+//    class TesteWatcher implements Watcher {
+//        @Override
+//        public void process(WatchedEvent event) {
+//
+//        }
+//    }
+
+    public void registraWatcher() {
+        try {
+            Watcher watcher =(WatchedEvent event) -> {
+                System.out.println(event);
+                switch(event.getType()){
+                    case NodeCreated -> System.out.println("ZNode criado");
+                    case NodeDeleted -> System.out.println("ZNode deletado");
+                    case NodeDataChanged -> System.out.println("Dados do ZNode alterados");
+                    case NodeChildrenChanged -> System.out.println("Evento envolvendo filhos");
+                }
+                registraWatcher();
+            };
+            Stat stat = zooKeeper.exists(ZNODE_TESTE_WATCHER, watcher);
+            if(stat != null) {
+                byte [] bytes = zooKeeper.getData(ZNODE_TESTE_WATCHER, watcher, stat);
+                var dados = new String(bytes);
+                System.out.println("Dados: " + dados);
+                List<String> filhos = zooKeeper.getChildren(ZNODE_TESTE_WATCHER, watcher);
+                System.out.println("Filhos: " + filhos);
+            }
+        }
+        catch(KeeperException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void main(String[] args) throws Exception{
         System.out.printf("Método main executando na thread: %s\n", Thread.currentThread().getName());
@@ -21,6 +57,7 @@ public class EleicaoDeLider {
         eleicaoDeLider.conectar();
         eleicaoDeLider.realizarCandidatura();
         eleicaoDeLider.elegerOLider();
+        eleicaoDeLider.registraWatcher();
         eleicaoDeLider.executar();
         eleicaoDeLider.fechar();
         //Thread.sleep(1000);
